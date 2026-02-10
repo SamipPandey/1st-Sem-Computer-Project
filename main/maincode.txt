@@ -17,6 +17,8 @@ void deletePatient();
 void userMenu();
 void adminMenu();
 int login();
+float calculateBill(int days);
+
 enum Status {
     ADMITTED,
     DISCHARGED
@@ -52,5 +54,6 @@ int main() {
     
     return 0;
 }
+
 
 
