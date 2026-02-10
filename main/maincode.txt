@@ -40,6 +40,8 @@ struct Patient {
     enum Status status;
 };
 int main() {
+FILE *fp=fopen(FILE_NAME.dat,wb);
+fclose(fp);
 
      int role;
 
@@ -57,6 +59,7 @@ int main() {
     
     return 0;
 }
+
 
 
 
