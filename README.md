@@ -1,6 +1,3 @@
-A Hospital Management System is very similar to a Bus Management System in terms of logic, but the data structures (like using "Patients" instead of "Buses" and "Doctors" instead of "Routes") are different.
-
-Here is a tailored README for a Hospital Management System using C:
 
 🏥 Hospital Management System (C Programming)
 A comprehensive command-line interface (CLI) application designed to manage hospital operations efficiently. This project demonstrates the practical application of Nested Structures, Modular Functions, and Binary File Handling to manage patient and doctor records.
