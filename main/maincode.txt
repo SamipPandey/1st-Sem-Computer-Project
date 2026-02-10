@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<maths.h>
+#include<stdlib.h>
+#define FILE_NAME "patients.dat"
+#define MAX_NAME 30
+#define MAX_DISEASE 40
+#define ROOM_CHARGE 1500
+#define DOCTOR_FEE 800
+#define MEDICINE_COST 1200
+void addPatient();
+void viewPatients();
+void searchPatient();
+void updatePatient();
+void deletePatient();
+enum Status {
+    ADMITTED,
+    DISCHARGED
+};
+struct Admin {
+    char username[20];
+    char password[20];
+};
+struct Patient {
+    int id;
+    char name[30];
+    int age;
+    char disease[40];
+    float bill;
+     struct Date admitDate;
+    enum Status status;
+};
+int main() {
+
+    char username[20], password[20];
+
+    printf("Enter username: ");
+    scanf("%s", username);
+
+    printf("Enter password: ");
+    scanf("%s", password);
+
+   if(login()==1) {
+   
+        printf("\nLogin successful! ✅\n");
+    
+ int choice;
+
+    do {
+        printf("\n--- Hospital Record Management System ---");
+        printf("\n1. Add Patient");
+        printf("\n2. View Patients");
+        printf("\n3. Search Patient");
+        printf("\n4. Update Patient");
+        printf("\n5. Delete Patient");
+        printf("\n0. Exit");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: addPatient(); break;
+            case 2: viewPatients(); break;
+            case 3: searchPatient(); break;
+            case 4: updatePatient(); break;
+            case 5: deletePatient(); break;
+            case 0: printf("Exiting...\n");
+             break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 0);
+} if(!login()) {
+    printf("Access denied!\n");
+    exit(0);
+}
+    
+    return 0;
+}
