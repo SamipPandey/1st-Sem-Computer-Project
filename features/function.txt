@@ -163,12 +163,12 @@ void searchPatient() {
 
 // deletePatient-----------------------------------------------------------
 void deletePatient() {
-    FILE *fp = fopen(FILE_NAME.dat, "rb"), *temp;
+    FILE *fp = fopen(FILE_NAME.dat, "rb"), *  temp = fopen("temp.dat", "wb");
     struct Patient p;
     int id;
 
     
-    temp = fopen("temp.dat", "wb");
+  
 
     printf("Enter patient ID to delete: ");
     scanf("%d", &id);
