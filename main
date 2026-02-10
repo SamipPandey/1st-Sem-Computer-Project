@@ -1,1 +1,29 @@
+int main() {
+    int choice;
+
+    do {
+        printf("\n--- Hospital Record Management System ---");
+        printf("\n1. Add Patient");
+        printf("\n2. View Patients");
+        printf("\n3. Search Patient");
+        printf("\n4. Update Patient");
+        printf("\n5. Delete Patient");
+        printf("\n0. Exit");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: addPatient(); break;
+            case 2: viewPatients(); break;
+            case 3: searchPatient(); break;
+            case 4: updatePatient(); break;
+            case 5: deletePatient(); break;
+            case 0: printf("Exiting...\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 0);
+
+    return 0;
+}
 
