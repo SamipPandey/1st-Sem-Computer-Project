@@ -9,6 +9,8 @@
 #define ROOM_CHARGE 1500
 #define DOCTOR_FEE 800
 #define MEDICINE_COST 1200
+#define ADMIN_USER "admin"
+#define ADMIN_PASS "admin123"
 void addPatient();
 void viewPatients();
 void searchPatient();
@@ -18,6 +20,7 @@ void userMenu();
 void adminMenu();
 int login();
 float calculateBill(int days);
+int game();
 
 enum Status {
     ADMITTED,
@@ -54,6 +57,7 @@ int main() {
     
     return 0;
 }
+
 
 
 
