@@ -21,7 +21,7 @@ int checkWin(char board[3][3]) {
     return 0;
 }
 
-int game() {
+void game() {
     char board[3][3] = { {'1','2','3'}, {'4','5','6'}, {'7','8','9'} };
     int choice, row, col;
     char player = 'X';
@@ -66,6 +66,4 @@ int game() {
         drawBoard(board);
         printf("Game Draw!\n");
     }
-
-    return 0;
 }
