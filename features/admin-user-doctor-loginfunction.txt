@@ -59,6 +59,7 @@ void adminMenu() {
         printf("\n3. Search Patient");
         printf("\n4. Update Patient");
         printf("\n5. Delete Patient");
+        printf("\n6. view treatment");
         printf("\n0. Logout");
 
         printf("\nEnter choice: ");
@@ -70,6 +71,7 @@ void adminMenu() {
             case 3: searchPatient(); break;
             case 4: updatePatient(); break;
             case 5: deletePatient(); break;
+            case 6: viewTreatments(); break;
             case 0: printf("Admin logged out.\n"); break;
             default: printf("Invalid choice!\n");
         }
@@ -83,6 +85,7 @@ void userMenu() {
         printf("\n--- USER MENU ---");
         printf("\n1. View Patients");
         printf("\n2. Search Patient");
+        printf("\n3. view treatment");
         printf("\n0. Logout");
 
         printf("\nEnter choice: ");
@@ -91,6 +94,7 @@ void userMenu() {
         switch(choice) {
             case 1: viewPatients(); break;
             case 2: searchPatient(); break;
+            case 3: viewTreatments(); break;
             case 0: printf("User logged out.\n"); break;
             default: game();
         }
