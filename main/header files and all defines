@@ -1,8 +1,8 @@
-#include<stdio.h>
-#include<conio.h>
-#include<string.h>
-#include<maths.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
 #define MAX_NAME 30
 #define MAX_DISEASE 40
 #define ROOM_CHARGE 1500
@@ -19,11 +19,11 @@ void updatePatient();
 void deletePatient();
 void addTreatment();
 void viewTreatments();
-void searchTreatment();
+void searchTreatments();
 void userMenu();
 void adminMenu();
+void doctorMenu();
 int login();
-int doctormenu();
 float calculateBill(int days);
 int game();
 void findPatientsByDoctor();
@@ -37,4 +37,5 @@ void viewDoctors();
 void addDoctor();
 void checkVacancy();
 void addWard();
-
+void drawBoard(char board[3][3]);
+int checkWin(char board[3][3]);
