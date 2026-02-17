@@ -1,0 +1,127 @@
+//Login menu ---------------------------------------------------------------------------------------------------
+int login() {
+    int choice;
+    char username[20], password[20];
+
+    printf("\n--- Login As ---");
+    printf("\n1. Admin");
+    printf("\n2. User");
+ printf("\n3. doctor");
+    printf("\nEnter choice: ");
+    scanf("%d", &choice);
+
+    if(choice == 1) {
+        printf("Admin Username: ");
+        scanf("%s", username);
+        printf("Admin Password: ");
+        scanf("%s", password);
+
+        if(strcmp(username, ADMIN_USER) == 0 &&
+           strcmp(password, ADMIN_PASS) == 0) {
+            printf("Admin login successful!\n");
+            return 1;   // Admin
+        } else {
+            printf("Invalid admin credentials!\n");
+            return 0;
+        }
+    }
+    else if(choice == 2) {
+        printf("User login successful!\n");
+        return 2;   // User
+    }
+    else {
+        printf("Invalid choice!\n");
+        return 0;
+    }
+ if(choice == 3) {
+        printf("doctor Username: ");
+        scanf("%s", username);
+        printf("doctor Password: ");
+        scanf("%s", password);
+
+        if(strcmp(username,DOC_USER) == 0 &&
+           strcmp(password, DOC_PASS) == 0) {
+            printf("doctor login successful!\n");
+            return 3;   // Admin
+        } else {
+            printf("Invalid admin credentials!\n");
+            return 0;
+        }
+}
+
+//Admin menu ---------------------------------------------------------------------------------------------------
+void adminMenu() {
+    int choice;
+    do {
+        printf("\n--- ADMIN MENU ---");
+        printf("\n1. Add Patient");
+        printf("\n2. View Patients");
+        printf("\n3. Search Patient");
+        printf("\n4. Update Patient");
+        printf("\n5. Delete Patient");
+        printf("\n0. Logout");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: addPatient(); break;
+            case 2: viewPatients(); break;
+            case 3: searchPatient(); break;
+            case 4: updatePatient(); break;
+            case 5: deletePatient(); break;
+            case 0: printf("Admin logged out.\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 0);
+}
+
+//User menu----------------------------------------------------------------------------------------------------------------
+void userMenu() {
+    int choice;
+    do {
+        printf("\n--- USER MENU ---");
+        printf("\n1. View Patients");
+        printf("\n2. Search Patient");
+        printf("\n0. Logout");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: viewPatients(); break;
+            case 2: searchPatient(); break;
+            case 0: printf("User logged out.\n"); break;
+            default: game();
+        }
+    } while(choice != 0);
+}
+
+//doctor menu----------------------------------------------------------------------------------------------------------
+void adminMenu() {
+    int choice;
+    do {
+        printf("\n--- doctor menu ---");
+        printf("\n1. Add Patient");
+        printf("\n2. View Patients");
+        printf("\n3. Search Patient");
+        printf("\n4. Update Patient");
+        printf("\n5. add treatment");
+        printf("\n6. view treatment");
+        printf("\n0. Logout");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: addPatient(); break;
+            case 2: viewPatients(); break;
+            case 3: searchPatient(); break;
+            case 4: updatePatient(); break;
+            case 5: addTreatment(); break;
+            case 6: viewTreatments(); break;
+            case 0: printf("Admin logged out.\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 0);
+}
