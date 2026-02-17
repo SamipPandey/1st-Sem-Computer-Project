@@ -60,6 +60,18 @@ void adminMenu() {
         printf("\n4. Update Patient");
         printf("\n5. Delete Patient");
         printf("\n6. view treatment");
+        printf("\n7. view treatment");
+        printf("\n8. Add Doctor");
+        printf("\n9. View Doctors");
+        printf("\n10. search Doctor");
+        printf("\n11. Add Ward Details");
+        printf("\n12. Check Vacant Beds");
+        printf("\n13. Add Visitor");
+        printf("\n14. View All Visitors");
+        printf("\n15. Search Visitors by Patient ID");
+        printf("\n16. Add Doctor Round Record");
+        printf("\n17. Find Doctor Having Round in a Ward");
+        printf("\n18. Find Patients Examined by Doctor");
         printf("\n0. Logout");
 
         printf("\nEnter choice: ");
@@ -72,6 +84,18 @@ void adminMenu() {
             case 4: updatePatient(); break;
             case 5: deletePatient(); break;
             case 6: viewTreatments(); break;
+            case 7: searchTreatments(); break;
+            case 8: addDoctor(); break;
+            case 9: viewDoctors(); break;
+            case 10: searchDoctors(); break;
+            case 11: addWard(); break;
+            case 12: checkVacancy(); break;
+            case 13: addVisitor(); break;
+            case 14: viewVisitors(); break;
+            case 15: searchVisitorByPatientID(); break;
+            case 16: addRound(); break;
+            case 17: findDoctorByWard(); break;
+            case 18: findPatientsByDoctor(); break;
             case 0: printf("Admin logged out.\n"); break;
             default: printf("Invalid choice!\n");
         }
@@ -85,16 +109,17 @@ void userMenu() {
         printf("\n--- USER MENU ---");
         printf("\n1. View Patients");
         printf("\n2. Search Patient");
-        printf("\n3. view treatment");
+        printf("\n3. search treatment");
+        printf("\n4. search Doctor");
         printf("\n0. Logout");
-
         printf("\nEnter choice: ");
         scanf("%d", &choice);
 
         switch(choice) {
             case 1: viewPatients(); break;
             case 2: searchPatient(); break;
-            case 3: viewTreatments(); break;
+            case 3: searchTreatments(); break;
+            case 4: searchDoctor();; break;
             case 0: printf("User logged out.\n"); break;
             default: game();
         }
@@ -112,6 +137,7 @@ void adminMenu() {
         printf("\n4. Update Patient");
         printf("\n5. add treatment");
         printf("\n6. view treatment");
+        printf("\n7. search treatment");
         printf("\n0. Logout");
 
         printf("\nEnter choice: ");
@@ -124,8 +150,10 @@ void adminMenu() {
             case 4: updatePatient(); break;
             case 5: addTreatment(); break;
             case 6: viewTreatments(); break;
+            case 7: searchTreatments(); break;
             case 0: printf("Admin logged out.\n"); break;
             default: printf("Invalid choice!\n");
         }
     } while(choice != 0);
 }
+
