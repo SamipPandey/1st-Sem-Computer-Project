@@ -1,6 +1,65 @@
+// ward and bed---------------------------------------------------------
+void addWard() {
+    FILE *fp = fopen(hospital_wardcheck.dat, "ab+");
+    struct Ward w;
+
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", w.wardName);
+
+    printf("Enter Total Beds: ");
+    scanf("%d", &w.totalBeds);
+
+    printf("Enter Occupied Beds: ");
+    scanf("%d", &w.occupiedBeds);
+
+    if (w.occupiedBeds > w.totalBeds) {
+        printf("Invalid data! Occupied beds exceed total beds.\n");
+        fclose(fp);
+        return;
+    }
+
+    fwrite(&w, sizeof(w), 1, fp);
+    fclose(fp);
+
+    printf("Ward data saved successfully.\n");
+}
+// see vacent ward and bed ----------------------------------------------------------------
+void checkVacancy() {
+    FILE *fp = fopen(hospital_wardcheck.dat, "rb");
+    struct Ward w;
+    int found = 0;
+
+    if (!fp) {
+        printf("No ward data available.\n");
+        return;
+    }
+
+    printf("\n--- Bed Vacancy Status ---\n");
+    while (fread(&w, sizeof(w), 1, fp)) {
+        int vacant = w.totalBeds - w.occupiedBeds;
+
+        printf("\nWard: %s", w.wardName);
+        printf("\nTotal Beds   : %d", w.totalBeds);
+        printf("\nOccupied Beds: %d", w.occupiedBeds);
+        printf("\nVacant Beds  : %d\n", vacant);
+
+        if (vacant > 0)
+            printf("Status: Admission Available ✅\n");
+        else
+            printf("Status: Full ❌\n");
+
+        found = 1;
+    }
+
+    if (!found)
+        printf("No records found.\n");
+
+    fclose(fp);
+}
+
 //addPatient -------------------------------------------------
 void addPatient() {
-    FILE * fp = fopen(FILE_NAME.dat, "ab"); // append binary
+    FILE * fp = fopen(hospital_patient.dat, "ab"); 
     struct Patient p;
 
     
@@ -21,10 +80,16 @@ void addPatient() {
     printf("Enter Disease: ");
     scanf(" %[^\n]", p.disease);
 
+     printf("Enter admission date in dd-mm-yyyy format: ");
+    scanf(" %d\t%d\%t", &p.date.day,&p.date.month,&p.date.year);
+
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", p.ward);
+
     printf("Enter Bill Amount: ");
     scanf("%f", &p.bill);
 
-    fwrite(&p, sizeof(p), 1, fp);
+   fwrite(&p, sizeof(p), 1, fp);
     fclose(fp);
 
     printf("Patient added successfully!\n");
@@ -32,7 +97,7 @@ void addPatient() {
 
 //view patient---------------------------------------------------------
     void viewPatients() {
-    FILE * fp = fopen(FILE_NAME.dat, "rb");
+    FILE * fp = fopen(hospital_patient.dat, "rb");
     struct Patient p;
 
    
@@ -41,10 +106,10 @@ void addPatient() {
         return;
     }
 
-    printf("\nID\tName\tAge\tDisease\tBill\n");
+    printf("\nID\tName\tAge\tDisease\tadmitdate\tBill\tward\n");
     while(fread(&p, sizeof(p), 1, fp)) {
-        printf("%d\t%s\t%d\t%s\t%.2f\n",
-               p.id, p.name, p.age, p.disease, p.bill);
+        printf("%d\t%s\t%d\t%s\t%d-%d-%d\t%.2f\t%s\n",
+               p.id, p.name, p.age, p.disease, p.date.day,p.date.month,p.date.year,p.bill,p.ward);
     }
 
     fclose(fp);
@@ -52,7 +117,7 @@ void addPatient() {
 
 //searchPatient---------------------------------------------------------
 void searchPatient() {
-    FILE * fp = fopen(FILE_NAME.dat, "rb");
+    FILE * fp = fopen(hospital_patient.dat, "rb");
     struct Patient p;
     int id, found = 0;
 
@@ -63,8 +128,8 @@ void searchPatient() {
     while(fread(&p, sizeof(p), 1, fp)) {
         if(p.id == id) {
             printf("Patient Found:\n");
-            printf("Name: %s\nAge: %d\nDisease: %s\nBill: %.2f\n",
-                   p.name, p.age, p.disease, p.bill);
+            printf("Name: %s\nAge: %d\nDisease: %s\nBill: %.2f\nward: %s\nadmitdate :%d-%d-%d\n",
+                   p.name, p.age, p.disease, p.bill,p.ward,p.date.day,p.date.month,p.date.year);
             found = 1;
             break;
         }
@@ -78,7 +143,7 @@ void searchPatient() {
 
 // deletePatient-----------------------------------------------------------
 void deletePatient() {
-    FILE *fp = fopen(FILE_NAME.dat, "rb"), *  temp = fopen("temp.dat", "wb");
+    FILE *fp = fopen(hospital_patient.dat, "rb"), *  temp = fopen("temp.dat", "wb");
     struct Patient p;
     int id;
 
@@ -97,16 +162,16 @@ void deletePatient() {
     fclose(temp);
 
     remove(FILE_NAME.dat);
-    rename("temp.dat", FILE_NAME);
+    rename("temp.dat", "hospital_patient.dat");
 
     printf("Patient record deleted.\n");
 }
 
 //updatePatient------------------------------------------------------------------
  void updatePatient() {
-    FILE * fp = fopen(FILE_NAME.dat, "rb+");
+    FILE * fp = fopen(hospital_patient.dat, "rb+");
     struct Patient p;
-    int id, found = 0;
+    int id,up, found = 0;
 
    
 
@@ -115,13 +180,25 @@ void deletePatient() {
 
     while(fread(&p, sizeof(p), 1, fp)) {
         if(p.id == id) {
+            printf("Enter what you want to update \n1.ward \n2.disease : ");
+            scanf("%d", &up);
+
+            if(up==2){
             printf("Enter new disease: ");
             scanf(" %[^\n]", p.disease);
-
+            found = 1;
+            }
+            elseif(up==1){
+            printf("Enter new ward: ");
+            scanf(" %[^\n]", p.ward);
+            found = 1;
+            }
+            else{
+            printf("invalid input for updating dataof patient: ");
+            found = 2;
+            }
             fseek(fp, -sizeof(p), SEEK_CUR);
             fwrite(&p, sizeof(p), 1, fp);
-
-            found = 1;
             break;
         }
     }
@@ -130,6 +207,8 @@ void deletePatient() {
 
     if(found)
         printf("Record updated successfully!\n");
+if(found==2)
+        printf("patient found but NO update done!\n");
     else
         printf("Patient not found!\n");
 }
@@ -146,7 +225,7 @@ scanf("%d", &days);
 
 //ADD treatment---------------------------------------------------------------------------------
 void addTreatment() {
-    FILE *fp = fopen(FILE_NAME.dat, "ab+");
+    FILE *fp = fopen(hospital_treatment.dat, "ab+");
     struct Treatment t;
 
     printf("Patient ID: ");
@@ -171,7 +250,7 @@ void addTreatment() {
 }
 // view treatment--------------------------------------------------------------------------------------------
 void viewTreatments() {
-    FILE *fp = fopen(FILE_NAME.dat, "rb");
+    FILE *fp = fopen(hospital_treatment.dat, "rb");
     struct Treatment t;
 
     if(!fp) {
@@ -185,3 +264,255 @@ void viewTreatments() {
     }
     fclose(fp);
 }
+// search teratment------------------------------------------------------------------------------------------
+void searchTreatment() {
+    FILE *fp = fopen(hospital_treatment.dat, "rb");
+    struct Treatment t;
+    char search[30];
+    int found = 0;
+
+    if (!fp) {
+        printf("No data available.\n");
+        return;
+    }
+
+    printf("Enter Patient id: ");
+    scanf(" %d", search);
+
+    while (fread(&t, sizeof(t), 1, fp)) {
+        if (strcmp(t.patientID, search) == 0) {
+            printf("\n--- Treatment Details ---");
+            printf("\nPatient   : %s", t.patientName);
+            printf("\nDisease   : %s", t.disease);
+            printf("\nMedicine  : %s", t.medicine);
+            printf("\nPrecaution: %s\n", t.precaution);
+            found = 1;
+            break;
+        }
+    }
+// doctor name and room no -----------------------------------------------------------------------------------
+void addDoctor() {
+    FILE *fp = fopen(hospital_doctor.dat, "ab+");
+    struct Doctor d;
+
+    printf("Enter Doctor Name: ");
+    scanf(" %[^\n]", d.name);
+
+    printf("Enter Room Number: ");
+    scanf("%d", &d.roomNo);
+
+    fwrite(&d, sizeof(d), 1, fp);
+    fclose(fp);
+
+    printf("Doctor added successfully.\n");
+}
+
+void viewDoctors() {
+    FILE *fp = fopen(hospital_doctor.dat, "rb");
+    struct Doctor d;
+
+    if (!fp) {
+        printf("No records found.\n");
+        return;
+    }
+
+    printf("\n--- Doctor List ---\n");
+    while (fread(&d, sizeof(d), 1, fp)) {
+        printf("Doctor: %s | Room: %d\n", d.name, d.roomNo);
+    }
+    fclose(fp);
+}
+//search doctor------------------------------------------------------------------------------------------------------------------------------------------
+void searchDoctor() {
+    FILE *fp = fopen(hospital_doctor.dat, "rb");
+    struct Doctor d;
+    char search[30];
+    int found = 0;
+
+    if (!fp) {
+        printf("No data available.\n");
+        return;
+    }
+
+    printf("Enter Doctor Name to Search: ");
+    scanf(" %[^\n]", search);
+
+    while (fread(&d, sizeof(d), 1, fp)) {
+        if (strcmp(d.name, search) == 0) {
+            printf("\nDoctor Found!");
+            printf("\nName : %s", d.name);
+            printf("\nRoom : %d\n", d.roomNo);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+        printf("Doctor not found.\n");
+
+    fclose(fp);
+}
+//
+//ADD VISITOR ------------------------------------------------------------------------------
+void addVisitor() {
+    FILE *fp = fopen(hospital_visitor.dat, "ab+");
+    struct Visitor v;
+
+    printf("Enter Patient ID: ");
+    scanf("%d", &v.patientID);
+
+    printf("Enter Patient Name: ");
+    scanf(" %[^\n]", v.patientName);
+
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", v.ward);
+
+    printf("Enter Visitor Name: ");
+    scanf(" %[^\n]", v.visitorName);
+
+    printf("Enter Relation with Patient: ");
+    scanf(" %[^\n]", v.relation);
+
+    fwrite(&v, sizeof(v), 1, fp);
+    fclose(fp);
+
+    printf("Visitor record saved successfully.\n");
+}
+
+// VIEW VISITORS -------------------------------------------------------------------
+void viewVisitors() {
+    FILE *fp = fopen(hospital_visitor.dat, "rb");
+    struct Visitor v;
+
+    if (!fp) {
+        printf("No visitor records found.\n");
+        return;
+    }
+
+    printf("\n--- Visitor Records ---\n");
+    while (fread(&v, sizeof(v), 1, fp)) {
+        printf("\nPatient ID   : %d", v.patientID);
+        printf("\nPatient Name : %s", v.patientName);
+        printf("\nWard         : %s", v.ward);
+        printf("\nVisitor Name : %s", v.visitorName);
+        printf("\nRelation     : %s\n", v.relation);
+    }
+
+    fclose(fp);
+}
+
+// SEARCH VISITOR BY PATIENT ID ----------------------------------
+void searchVisitorByPatientID() {
+    FILE *fp = fopen(hospital_visitor.dat, "rb");
+    struct Visitor v;
+    int searchID, found = 0;
+
+    if (!fp) {
+        printf("No data available.\n");
+        return;
+    }
+
+    printf("Enter Patient ID to Search Visitors: ");
+    scanf("%d", &searchID);
+
+    printf("\n--- Visitors for Patient ID %d ---\n", searchID);
+    while (fread(&v, sizeof(v), 1, fp)) {
+        if (v.patientID == searchID) {
+            printf("\nVisitor Name : %s", v.visitorName);
+            printf("\nRelation     : %s", v.relation);
+            printf("\nWard         : %s\n", v.ward);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No visitors found for this patient.\n");
+
+    fclose(fp);
+}
+//ADD DOCTOR ROUND -------------------------------------------------------------------------------------------------
+void addRound() {
+    FILE *fp = fopen(hospital_round.dat, "ab+");
+    struct Round r;
+
+    printf("Enter Doctor ID: ");
+    scanf("%d", &r.doctorID);
+
+    printf("Enter Doctor Name: ");
+    scanf(" %[^\n]", r.doctorName);
+
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", r.ward);
+
+    printf("Enter Patient ID Examined: ");
+    scanf("%d", &r.patientID);
+
+    printf("Enter Patient Name: ");
+    scanf(" %[^\n]", r.patientName);
+
+    fwrite(&r, sizeof(r), 1, fp);
+    fclose(fp);
+
+    printf("Doctor round record saved successfully.\n");
+}
+
+// FIND DOCTOR ROUND BY WARD ---------------------------------------------------------------------------------------------
+void findDoctorByWard() {
+    FILE *fp = fopen(hospital_round.dat, "rb");
+    struct Round r;
+    char searchWard[30];
+    int found = 0;
+
+    if (!fp) {
+        printf("No round records found.\n");
+        return;
+    }
+
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", searchWard);
+
+    printf("\n--- Doctors Having Round in %s ---\n", searchWard);
+    while (fread(&r, sizeof(r), 1, fp)) {
+        if (strcmp(r.ward, searchWard) == 0) {
+            printf("Doctor ID: %d | Doctor Name: %s\n",
+                   r.doctorID, r.doctorName);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No doctor round found for this ward.\n");
+
+    fclose(fp);
+}
+
+// FIND PATIENTS EXAMINED BY DOCTOR ---------------------------------------------------------------------------------------------
+void findPatientsByDoctor() {
+    FILE *fp = fopen(hospital_round.dat, "rb");
+    struct Round r;
+    int searchDoctorID;
+    int found = 0;
+
+    if (!fp) {
+        printf("No round records available.\n");
+        return;
+    }
+
+    printf("Enter Doctor ID: ");
+    scanf("%d", &searchDoctorID);
+
+    printf("\n--- Patients Examined by Doctor ID %d ---\n", searchDoctorID);
+    while (fread(&r, sizeof(r), 1, fp)) {
+        if (r.doctorID == searchDoctorID) {
+            printf("Patient ID: %d | Name: %s | Ward: %s\n",
+                   r.patientID, r.patientName, r.ward);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No patients found for this doctor.\n");
+
+    fclose(fp);
+}
+
