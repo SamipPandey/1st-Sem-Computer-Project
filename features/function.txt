@@ -6,6 +6,7 @@ int login() {
     printf("\n--- Login As ---");
     printf("\n1. Admin");
     printf("\n2. User");
+ printf("\n3. doctor");
     printf("\nEnter choice: ");
     scanf("%d", &choice);
 
@@ -32,6 +33,20 @@ int login() {
         printf("Invalid choice!\n");
         return 0;
     }
+ if(choice == 3) {
+        printf("doctor Username: ");
+        scanf("%s", username);
+        printf("doctor Password: ");
+        scanf("%s", password);
+
+        if(strcmp(username,DOC_USER) == 0 &&
+           strcmp(password, DOC_PASS) == 0) {
+            printf("doctor login successful!\n");
+            return 3;   // Admin
+        } else {
+            printf("Invalid admin credentials!\n");
+            return 0;
+        }
 }
 
 //Admin menu ---------------------------------------------------------------------------------------------------
@@ -44,6 +59,7 @@ void adminMenu() {
         printf("\n3. Search Patient");
         printf("\n4. Update Patient");
         printf("\n5. Delete Patient");
+        printf("\n6. view treatment");
         printf("\n0. Logout");
 
         printf("\nEnter choice: ");
@@ -55,6 +71,7 @@ void adminMenu() {
             case 3: searchPatient(); break;
             case 4: updatePatient(); break;
             case 5: deletePatient(); break;
+            case 6: viewTreatments(); break;
             case 0: printf("Admin logged out.\n"); break;
             default: printf("Invalid choice!\n");
         }
@@ -68,6 +85,7 @@ void userMenu() {
         printf("\n--- USER MENU ---");
         printf("\n1. View Patients");
         printf("\n2. Search Patient");
+        printf("\n3. view treatment");
         printf("\n0. Logout");
 
         printf("\nEnter choice: ");
@@ -76,12 +94,41 @@ void userMenu() {
         switch(choice) {
             case 1: viewPatients(); break;
             case 2: searchPatient(); break;
+            case 3: viewTreatments(); break;
             case 0: printf("User logged out.\n"); break;
             default: game();
         }
     } while(choice != 0);
 }
 
+//doctor menu----------------------------------------------------------------------------------------------------------
+void adminMenu() {
+    int choice;
+    do {
+        printf("\n--- doctor menu ---");
+        printf("\n1. Add Patient");
+        printf("\n2. View Patients");
+        printf("\n3. Search Patient");
+        printf("\n4. Update Patient");
+        printf("\n5. add treatment");
+        printf("\n6. view treatment");
+        printf("\n0. Logout");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: addPatient(); break;
+            case 2: viewPatients(); break;
+            case 3: searchPatient(); break;
+            case 4: updatePatient(); break;
+            case 5: addTreatment(); break;
+            case 6: viewTreatments(); break;
+            case 0: printf("Admin logged out.\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 0);
+}
 
 //addPatient -------------------------------------------------
 void addPatient() {
@@ -229,4 +276,44 @@ scanf("%d", &days);
            MEDICINE_COST;
 }
 
-//---------------------------------------------------------------------------------
+//ADD treatment---------------------------------------------------------------------------------
+void addTreatment() {
+    FILE *fp = fopen(FILE_NAME.dat, "ab+");
+    struct Treatment t;
+
+    printf("Patient ID: ");
+    scanf("%d", &t.patientID);
+
+    printf("Name: ");
+    scanf(" %[^\n]", t.name);
+
+    printf("Disease: ");
+    scanf(" %[^\n]", t.disease);
+
+    printf("Medication: ");
+    scanf(" %[^\n]", t.medication);
+
+    printf("Precaution: ");
+    scanf(" %[^\n]", t.precaution);
+
+    fwrite(&t, sizeof(t), 1, fp);
+    fclose(fp);
+
+    printf("Treatment record saved.\n");
+}
+// view treatment--------------------------------------------------------------------------------------------
+void viewTreatments() {
+    FILE *fp = fopen(FILE_NAME.dat, "rb");
+    struct Treatment t;
+
+    if(!fp) {
+        printf("No records found.\n");
+        return;
+    }
+
+    while(fread(&t, sizeof(t), 1, fp)) {
+        printf("\nID: %d\nName: %s\nDisease: %s\nMedication: %s\nPrecaution: %s\n",
+               t.patientID, t.name, t.disease, t.medication, t.precaution);
+    }
+    fclose(fp);
+}
