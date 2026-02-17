@@ -3,7 +3,6 @@
 #include<string.h>
 #include<maths.h>
 #include<stdlib.h>
-#define FILE_NAME "patients.dat"
 #define MAX_NAME 30
 #define MAX_DISEASE 40
 #define ROOM_CHARGE 1500
@@ -13,7 +12,6 @@
 #define ADMIN_PASS "admin123"
 #define DOC_USER "doctor"
 #define DOC_PASS "doc123"
-#define FILE_NAME "medical.dat"
 void addPatient();
 void viewPatients();
 void searchPatient();
@@ -21,9 +19,22 @@ void updatePatient();
 void deletePatient();
 void addTreatment();
 void viewTreatments();
+void searchTreatment();
 void userMenu();
 void adminMenu();
 int login();
 int doctormenu();
 float calculateBill(int days);
 int game();
+void findPatientsByDoctor();
+void findDoctorByWard();
+void addRound();
+void searchVisitorByPatientID();
+void viewVisitors();
+void addVisitor();
+void searchDoctor();
+void viewDoctors();
+void addDoctor();
+void checkVacancy();
+void addWard();
+
