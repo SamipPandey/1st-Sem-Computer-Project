@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<maths.h>
+#include<stdlib.h>
+#define FILE_NAME "patients.dat"
+#define MAX_NAME 30
+#define MAX_DISEASE 40
+#define ROOM_CHARGE 1500
+#define DOCTOR_FEE 800
+#define MEDICINE_COST 1200
+#define ADMIN_USER "admin"
+#define ADMIN_PASS "admin123"
+#define DOC_USER "doctor"
+#define DOC_PASS "doc123"
+#define FILE_NAME "medical.dat"
+void addPatient();
+void viewPatients();
+void searchPatient();
+void updatePatient();
+void deletePatient();
+void addTreatment();
+void viewTreatments();
+void userMenu();
+void adminMenu();
+int login();
+int doctormenu();
+float calculateBill(int days);
+int game();
