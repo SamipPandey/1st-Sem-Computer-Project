@@ -2,6 +2,11 @@ enum Status {
     ADMITTED,
     DISCHARGED
 };
+struct date {
+int day;
+int month;
+int year;
+};
 struct Admin {
     char username[20];
     char password[20];
@@ -12,7 +17,8 @@ struct Patient {
     int age;
     char disease[40];
     float bill;
-     struct Date admitDate;
+    struct Date admitDate;
+    char ward[30];
     enum Status status;
 };
 struct Treatment {
@@ -21,4 +27,28 @@ struct Treatment {
     char disease[50];
     char medication[50];
     char precaution[100];
+};
+struct Ward {
+    char wardName[30];
+    int totalBeds;
+    int occupiedBeds;
+};
+struct Doctor {
+    int roomNo;
+    char name[30];
+};
+struct Visitor {
+    int patientID;
+    char patientName[30];
+    char ward[30];
+    char visitorName[30];
+    char relation[20];
+};
+struct Round {
+    int doctorID;
+    char doctorName[30];
+    char ward[30];
+    int patientID;
+    char patientName[30];
+    strut date round_time;
 };
