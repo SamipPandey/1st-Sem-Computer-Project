@@ -1,0 +1,24 @@
+enum Status {
+    ADMITTED,
+    DISCHARGED
+};
+struct Admin {
+    char username[20];
+    char password[20];
+};
+struct Patient {
+    int id;
+    char name[30];
+    int age;
+    char disease[40];
+    float bill;
+     struct Date admitDate;
+    enum Status status;
+};
+struct Treatment {
+    int patientID;
+    char name[30];
+    char disease[50];
+    char medication[50];
+    char precaution[100];
+};
