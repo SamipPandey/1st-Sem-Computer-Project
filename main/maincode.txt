@@ -11,14 +11,20 @@
 #define MEDICINE_COST 1200
 #define ADMIN_USER "admin"
 #define ADMIN_PASS "admin123"
+#define DOC_USER "doctor"
+#define DOC_PASS "doc123"
+#define FILE_NAME "medical.dat"
 void addPatient();
 void viewPatients();
 void searchPatient();
 void updatePatient();
 void deletePatient();
+void addTreatment();
+void viewTreatments();
 void userMenu();
 void adminMenu();
 int login();
+int doctormenu();
 float calculateBill(int days);
 int game();
 
@@ -39,8 +45,15 @@ struct Patient {
      struct Date admitDate;
     enum Status status;
 };
+struct Treatment {
+    int patientID;
+    char name[30];
+    char disease[50];
+    char medication[50];
+    char precaution[100];
+};
 int main() {
-FILE *fp=fopen(FILE_NAME.dat,wb);
+FILE *fp=fopen(MAIN_FILE.dat,wb);
 fclose(fp);
 
      int role;
@@ -53,12 +66,16 @@ fclose(fp);
     else if(role == 2) {
         userMenu();
     }
+else if(role == 3) {
+       doctormenu();
+    }
     else {
         printf("Exiting system.\n");
     }
     
     return 0;
 }
+
 
 
 
