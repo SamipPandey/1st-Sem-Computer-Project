@@ -19,9 +19,10 @@ else if(role == 3) {
     else {
         printf("Exiting system.\n");
     }
-    
+     getch();
     return 0;
 }
+
 
 
 
