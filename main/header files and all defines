@@ -1,41 +1,56 @@
 #include <stdio.h>
-#include <conio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <stdlib.h>
+#include <conio.h>
+
+/* ================== CONSTANTS ================== */
 #define MAX_NAME 30
 #define MAX_DISEASE 40
+
 #define ROOM_CHARGE 1500
 #define DOCTOR_FEE 800
 #define MEDICINE_COST 1200
+
 #define ADMIN_USER "admin"
 #define ADMIN_PASS "admin123"
 #define DOC_USER "doctor"
 #define DOC_PASS "doc123"
+
+/* ================== FUNCTION DECLARATIONS ================== */
+
+int login();
+void adminMenu();
+void userMenu();
+void doctorMenu();
+
+/* Patient */
 void addPatient();
 void viewPatients();
 void searchPatient();
 void updatePatient();
 void deletePatient();
+float calculateBill(int days);
+
+/* Other modules (Part 2 & 3) */
+void addDoctor();
+void viewDoctors();
+void searchDoctor();
+
 void addTreatment();
 void viewTreatments();
 void searchTreatments();
-void userMenu();
-void adminMenu();
-void doctorMenu();
-int login();
-float calculateBill(int days);
-int game();
-void findPatientsByDoctor();
-void findDoctorByWard();
-void addRound();
-void searchVisitorByPatientID();
-void viewVisitors();
-void addVisitor();
-void searchDoctor();
-void viewDoctors();
-void addDoctor();
-void checkVacancy();
+
 void addWard();
-void drawBoard(char board[3][3]);
-int checkWin(char board[3][3]);
+void checkVacancy();
+
+void addVisitor();
+void viewVisitors();
+void searchVisitorByPatientID();
+
+void addRound();
+void findDoctorByWard();
+void findPatientsByDoctor();
+
+int game();
+/*=========================================================*/
