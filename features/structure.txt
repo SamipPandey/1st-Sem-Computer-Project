@@ -1,54 +1,55 @@
-enum Status {
-    ADMITTED,
-    DISCHARGED
-};
+/* ================== STRUCTURES ==========C:\Users\sworn\OneDrive\Desktop\swornim\github\1st-Sem-Computer-Project\main\header files and all defines======== */
+
+enum Status { ADMITTED, DISCHARGED };
+
 struct date {
-int day;
-int month;
-int year;
+    int day;
+    int month;
+    int year;
 };
-struct Admin {
-    char username[20];
-    char password[20];
+
+struct Medication {
+    char name[30];
+    char dosage[20];
+    int days;
+    float price;
 };
+
+
 struct Patient {
     int id;
     char name[30];
     int age;
     char disease[40];
     float bill;
-    struct Date admitDate;
+    struct date Date;
+    struct Medication med;
     char ward[30];
     enum Status status;
+    int days;
 };
-struct Treatment {
-    int patientID;
+
+struct Doctor {
+    int id;
     char name[30];
-    char disease[50];
-    char medication[50];
-    char precaution[100];
+    int roomNo;
 };
+
+
 struct Ward {
     char wardName[30];
     int totalBeds;
     int occupiedBeds;
 };
-struct Doctor {
-    int roomNo;
-    char name[30];
-};
+
 struct Visitor {
     int patientID;
-    char patientName[30];
-    char ward[30];
     char visitorName[30];
     char relation[20];
 };
+
 struct Round {
     int doctorID;
-    char doctorName[30];
-    char ward[30];
     int patientID;
-    char patientName[30];
-    strut date round_time;
+    char ward[30];
 };

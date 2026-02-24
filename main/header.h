@@ -1,6 +1,11 @@
+#ifndef PROJECT_HEADER_H
+#define PROJECT_HEADER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../features/structures.h"    /* bring in struct and enum definitions */
 
 /* ================== CONSTANTS ================== */
 
@@ -14,9 +19,6 @@
 #define DOC_PASS "doc123"
 #define PHARM_USER "PHARM"
 #define PHARM_PASS "PHARM123"
-
-
-
 
 /* ================== FUNCTION DECLARATIONS ================== */
 
@@ -55,3 +57,5 @@ void findDoctorByWard();
 void findPatientsByDoctor();
 
 int game();
+
+#endif /* PROJECT_HEADER_H */
