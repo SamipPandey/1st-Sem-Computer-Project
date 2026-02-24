@@ -1,8 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+<<<<<<< HEAD
 
 /* ================== CONSTANTS ================== */
+=======
+#include <math.h>
+#include <conio.h>
+
+/* ================== CONSTANTS ================== */
+#define MAX_NAME 30
+#define MAX_DISEASE 40
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
 
 #define ROOM_CHARGE 1500
 #define DOCTOR_FEE 800
@@ -12,11 +21,14 @@
 #define ADMIN_PASS "admin123"
 #define DOC_USER "doctor"
 #define DOC_PASS "doc123"
+<<<<<<< HEAD
 #define PHARM_USER "PHARM"
 #define PHARM_PASS "PHARM123"
 
 
 
+=======
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
 
 /* ================== FUNCTION DECLARATIONS ================== */
 
@@ -24,7 +36,10 @@ int login();
 void adminMenu();
 void userMenu();
 void doctorMenu();
+<<<<<<< HEAD
 void pharmacistMenu();
+=======
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
 
 /* Patient */
 void addPatient();
@@ -33,6 +48,7 @@ void searchPatient();
 void updatePatient();
 void deletePatient();
 float calculateBill(int days);
+<<<<<<< HEAD
 
 /* Other modules (Part 2 & 3) */
 void addDoctor();
@@ -43,6 +59,18 @@ void addMedicationByDoctor();
 void viewMedication();
 void searchTreatments();
 void addPriceByPharmacist();
+=======
+
+/* Other modules (Part 2 & 3) */
+void addDoctor();
+void viewDoctors();
+void searchDoctor();
+
+void addTreatment();
+void viewTreatments();
+void searchTreatments();
+
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
 void addWard();
 void checkVacancy();
 
@@ -55,3 +83,7 @@ void findDoctorByWard();
 void findPatientsByDoctor();
 
 int game();
+<<<<<<< HEAD
+=======
+/*=========================================================*/
+>>>>>>> 300831474905660f57112987288a5f68ea85abec

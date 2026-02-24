@@ -5,6 +5,7 @@
 /* Function prototypes */
 void drawBoard(char board[3][3]);
 int checkWin(char board[3][3]);
+int game();
 
 int game() {
     char board[3][3] = {

@@ -18,6 +18,21 @@ int main(int a) {
         pharmacistMenu();
     else
         printf("Exiting system.\n");
+<<<<<<< HEAD
 	}
     return 0;
 }
+=======
+    }
+     getch();
+    return 0;
+}
+
+
+
+
+
+
+
+
+>>>>>>> 300831474905660f57112987288a5f68ea85abec

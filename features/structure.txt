@@ -1,12 +1,23 @@
+<<<<<<< HEAD
 /* ================== STRUCTURES ==========C:\Users\sworn\OneDrive\Desktop\swornim\github\1st-Sem-Computer-Project\main\header files and all defines======== */
 
 enum Status { ADMITTED, DISCHARGED };
 
 struct date {
+=======
+enum Status
+{
+    ADMITTED,
+    DISCHARGED
+};
+struct date
+{
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     int day;
     int month;
     int year;
 };
+<<<<<<< HEAD
 
 struct Medication {
     char name[30];
@@ -17,39 +28,83 @@ struct Medication {
 
 
 struct Patient {
+=======
+struct Admin
+{
+    char username[20];
+    char password[20];
+};
+struct Patient
+{
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     int id;
     char name[30];
     int age;
     char disease[40];
     float bill;
     struct date Date;
+<<<<<<< HEAD
     struct Medication med;
+=======
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     char ward[30];
     enum Status status;
     int days;
 };
+<<<<<<< HEAD
 
 struct Doctor {
     int id;
+=======
+struct Treatment
+{
+    int patientID;
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     char name[30];
     int roomNo;
 };
+<<<<<<< HEAD
 
 
 struct Ward {
+=======
+struct Ward
+{
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     char wardName[30];
     int totalBeds;
     int occupiedBeds;
 };
+<<<<<<< HEAD
 
 struct Visitor {
+=======
+struct Doctor
+{
+    int roomNo;
+    char name[30];
+};
+struct Visitor
+{
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     int patientID;
     char visitorName[30];
     char relation[20];
 };
+<<<<<<< HEAD
 
 struct Round {
+=======
+struct Round
+{
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
     int doctorID;
     int patientID;
+<<<<<<< HEAD
     char ward[30];
 };
+=======
+    char patientName[30];
+     strut date round_time;
+};
+>>>>>>> 300831474905660f57112987288a5f68ea85abec
