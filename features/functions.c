@@ -1,11 +1,13 @@
-#include "../main/header.h"
-
-/* ================== PATIENT MODULE ================== */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void addPatient() {
     clearScreen();
     FILE *fp = fopen("patients.dat", "ab");
     struct Patient p;
+ p.med.price = 0.0;
+    int days;
 
     if (!fp) {
         printf("File error!\n");
@@ -16,19 +18,19 @@ void addPatient() {
     scanf("%d", &p.id);
 
     printf("Enter Name: ");
-    scanf(" %[^]", p.name);
+    scanf(" %[^\n]", p.name);
 
     printf("Enter Age: ");
     scanf("%d", &p.age);
 
-printf("Enter Disease: ");
-scanf(" %[^\n]", p.disease);
+    printf("Enter Disease: ");
+    scanf(" %[^\n]", p.disease);
 
-printf("Enter Admission Date (dd-mm-yyyy): ");
-scanf("%d-%d-%d", &p.Date.day, &p.Date.month, &p.Date.year);
+    printf("Enter Admission Date (dd-mm-yyyy): ");
+    scanf("%d-%d-%d", &p.Date.day, &p.Date.month, &p.Date.year);
 
-printf("Enter Ward: ");
-scanf(" %[^\n]", p.ward);
+    printf("Enter Ward: ");
+    scanf(" %[^\n]", p.ward);
 
     printf("Enter Status (0=Admitted, 1=Discharged): ");
     scanf("%d", (int*)&p.status);
@@ -36,34 +38,31 @@ scanf(" %[^\n]", p.ward);
     printf("Enter Number of Days Admitted: ");
     scanf("%d", &p.days);
 
+   
+
     fwrite(&p, sizeof(p), 1, fp);
     fclose(fp);
 
     printf("Patient added successfully!\n");
 }
 
-float calculateBill(int days) {
-    FILE *fp = fopen("patients.dat", "rb");
-    struct Patient pm;
-    int pid;
-    char Name[30];
+float calculateBill(struct Patient p) {
+	
+	
+    
+    printf(" Patient ID: ");
+    printf("%d", &p.id);
 
-    printf("Enter Patient ID: ");
-    scanf("%d", &pid);
+    printf(" Name: ");
+    printf(" %[^\n]", p.name);
 
-printf("Enter  Name: ");
-scanf(" %[^\n]", Name);
-
-    while (fread(&pm, sizeof(pm), 1, fp)) {
-        if (pm.id == pid && strcmp(pm.name, Name) == 0) {
-            return ( pm.bill + (ROOM_CHARGE * days) + DOCTOR_FEE +pm.med.price);
-        }
-    }
-    return 0;
+    return (p.days * ROOM_CHARGE) + DOCTOR_FEE + p.med.price;
+    
+return(0);
 }
 
 void viewPatients() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("patients.dat", "rb");
     struct Patient p;
 
@@ -73,17 +72,21 @@ void viewPatients() {
     }
 
     while (fread(&p, sizeof(p), 1, fp)) {
-        printf("\nID: %d\nName: %s\nAge: %d\nDisease: %s\nDate: %02d-%02d-%04d\nWard: %s\nBill: %.2f\n",
+        printf("\nID: %d\nName: %s\nAge: %d\nDisease: %s\nDate: %02d-%02d-%04d\nWard: %s\nBill: %.2f",
                p.id, p.name, p.age, p.disease,
                p.Date.day, p.Date.month, p.Date.year,
                p.ward, p.bill);
+               printf("\nMedicine   : %s", p.med.name);
+        printf("\nDosage     : %s", p.med.dosage);
+        printf("\nDuration   : %d days", p.med.days);
+        printf("\nPrice      : Rs %.2f\n", p.med.price);
     }
 
     fclose(fp);
 }
 
 void searchPatient() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("patients.dat", "rb");
     struct Patient p;
     int id, found = 0;
@@ -113,7 +116,7 @@ void searchPatient() {
 }
 
 void updatePatient() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("patients.dat", "rb+");
     struct Patient p;
     int id,choice, found = 0;
@@ -128,35 +131,35 @@ void updatePatient() {
 
     while (fread(&p, sizeof(p), 1, fp)) {
         if (p.id == id) {
-            printf("what do you want to update \n ");
+        	printf("what do you want to update \n ");
 
-            printf("1.\tAge: \n");
-            printf("2.\tDisease:\n ");
-            printf("3.\tAdmission Date (dd-mm-yyyy):\n ");
-            printf("4.\tWard: \n");
-            printf("5.\tStatus (0=Admitted, 1=Discharged):/n ");
-            printf("6.\tEnter Number of Days Admitted: \n");
-            printf("Enter choice: ");
-            scanf("%d", &choice);
+   				 printf("1.\tAge:\n");
+   				 printf("2.\tDisease:\n ");
+    			 printf("3.\tAdmission Date (dd-mm-yyyy):\n ");
+   				 printf("4.\tWard:\n");
+   				 printf("5.\tStatus (0=Admitted, 1=Discharged):\n ");
+   				 printf("6.\tEnter Number of Days Admitted:\n");
+   				 printf("Enter choice: ");
+       			 scanf("%d", &choice);
 
-            switch (choice) {
-                case 1:  printf("Enter Age: ");
-                        scanf("%d", &p.age);break;
-case 2:   printf("Enter Disease: ");
-        scanf(" %[^\n]", p.disease); break;
-                case 3:  printf("Enter Admission Date (dd-mm-yyyy): ");
-                        scanf("%d-%d-%d", &p.Date.day, &p.Date.month, &p.Date.year); break;
-case 4:  printf("Enter Ward: ");
-        scanf(" %[^\n]", p.ward); break;
-                case 5:printf("Enter Status (0=Admitted, 1=Discharged): ");
-                        scanf("%d", (int*)&p.status) ; break;
-                case 6:printf("Enter Number of Days Admitted: ");
-                        scanf("%d", &p.days) ; break;
-                default: printf("Invalid choice!\n");
-            }
+        switch (choice) {
+            case 1:  printf("Enter Age: ");
+    				scanf("%d", &p.age);break;
+            case 2:   printf("Enter Disease: ");
+    				scanf(" %[^\n]", p.disease); break;
+            case 3:  printf("Enter Admission Date (dd-mm-yyyy): ");
+    				scanf("%d-%d-%d", &p.Date.day, &p.Date.month, &p.Date.year); break;
+            case 4:  printf("Enter Ward: ");
+    				scanf(" %[^\n]", p.ward); break;
+            case 5:printf("Enter Status (0=Admitted, 1=Discharged): ");
+   					scanf("%d", (int*)&p.status) ; break;
+            case 6:printf("Enter Number of Days Admitted: ");
+    				scanf("%d", &p.days) ; break;
+            default: printf("Invalid choice!\n");
+        }
 
-            fseek(fp, sizeof(p), SEEK_CUR);
-            fwrite(&p, sizeof(p), 1, fp);
+            fseek(fp, -((long)sizeof(p)), SEEK_CUR); 
+			fwrite(&p, sizeof(p), 1, fp);
 
             found = 1;
             break;
@@ -172,7 +175,7 @@ case 4:  printf("Enter Ward: ");
 }
 
 void deletePatient() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("patients.dat", "rb");
     FILE *temp = fopen("temp.dat", "wb");
     struct Patient p;
@@ -204,11 +207,10 @@ void deletePatient() {
     else
         printf("Patient not found.\n");
 }
-
 /* ================== DOCTOR MODULE ================== */
 
 void addDoctor() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("doctors.dat", "ab");
     struct Doctor d;
 
@@ -220,8 +222,8 @@ void addDoctor() {
     printf("Enter Doctor ID: ");
     scanf("%d", &d.id);
 
-printf("Enter Doctor Name: ");
-scanf(" %[^\n]", d.name);
+    printf("Enter Doctor Name: ");
+    scanf(" %[^\n]", d.name);
 
     printf("Enter Room Number: ");
     scanf("%d", &d.roomNo);
@@ -233,7 +235,7 @@ scanf(" %[^\n]", d.name);
 }
 
 void viewDoctors() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("doctors.dat", "rb");
     struct Doctor d;
 
@@ -251,7 +253,7 @@ void viewDoctors() {
 }
 
 void searchDoctor() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("doctors.dat", "rb");
     struct Doctor d;
     int id, found = 0;
@@ -282,32 +284,28 @@ void searchDoctor() {
 /* ================== TREATMENT MODULE ================== */
 
 void addMedicationByDoctor() {
-    clearScreen();
-    FILE *fp = fopen("patients.dat", "ab+");
-    struct Patient pm;
-
-    printf("Enter Patient ID: ");
-    scanf("%d", &pm.id);
-
-printf("Enter Medicine Name: ");
-scanf(" %[^\n]", pm.med.name);
-
-printf("Enter Dosage (e.g., 1-0-1): ");
-scanf(" %[^\n]", pm.med.dosage);
-
-    printf("Enter Duration (days): ");
-    scanf("%d", &pm.med.days);
-
-    pm.med.price = 0.0;   // pharmacist will update
-
-    fwrite(&pm, sizeof(pm), 1, fp);
+    FILE *fp = fopen("patients.dat", "rb+");
+    struct Patient p;
+    int id, found = 0;
+    printf("Patient ID: "); scanf("%d", &id);
+    while (fread(&p, sizeof(p), 1, fp)) {
+        if (p.id == id) {
+            found = 1;
+            printf("Medicine: "); scanf(" %[^\n]", p.med.name);
+            printf("Dosage: "); scanf(" %[^\n]", p.med.dosage);
+            printf("Days: "); scanf("%d", &p.med.days);
+            fseek(fp, -((long)sizeof(p)), SEEK_CUR);
+            fwrite(&p, sizeof(p), 1, fp);
+            break;
+        }
+    }
     fclose(fp);
-
-    printf("Medication added by doctor.\n");
+    if(found) printf("Medicine Prescribed.\n");
 }
 
+
 void viewMedication() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("patients.dat", "rb");
     struct Patient pm;
 
@@ -329,48 +327,35 @@ void viewMedication() {
 }
 
 void addPriceByPharmacist() {
-    clearScreen();
     FILE *fp = fopen("patients.dat", "rb+");
-    struct Patient pm;
-    int pid, found = 0;
-    char medName[30],Name[30];
-    float price;
+    struct Patient p;
+    char Name[50],medName[50];
+    int id, found = 0;
+    printf("Patient ID: "); 
+	scanf("%d", &id);
+    printf("Enter  PATIENT Name: ");
+    scanf(" %[^\n]", Name);
+    printf("Enter  medication Name: ");
+    scanf(" %[^\n]", medName);
 
-    printf("Enter Patient ID: ");
-    scanf("%d", &pid);
-
-printf("Enter  PATIENT Name: ");
-scanf(" %[^\n]", Name);
-
-printf("Enter  medication Name: ");
-scanf(" %[^\n]", medName);
-
-    printf("Enter Medicine Price: ");
-    scanf("%f", &price);
-
-    while (fread(&pm, sizeof(pm), 1, fp)) {
-        if (pm.id == pid && strcmp(pm.name, Name) == 0 && strcmp(pm.med.name, Name) == 0) {
-            while (fread(&pm, sizeof(pm), 1, fp)) {
-                printf("\nPatient ID : %d", pm.id);
-                printf("\nname\t	 : %s", pm.name);
-                printf("\nMedicine   : %s", pm.med.name);
-                printf("\nDosage     : %s", pm.med.dosage);
-                printf("\nDuration   : %d days", pm.med.days);
-                pm.med.price = price;
-                pm.bill = calculateBill(pm.days);
-                fseek(fp, sizeof(pm), SEEK_CUR);
-                fwrite(&pm, sizeof(pm), 1, fp);
-                printf("Price updated successfully.\n");
-                found = 1;
-            }
+    while (fread(&p, sizeof(p), 1, fp)) {
+        if (p.id == id) {
+        		printf("\nPatient ID : %d", p.id);
+        		printf("\nname 		 : %s", p.name);
+        		printf("\nMedicine   : %s", p.med.name);
+        		printf("\nDosage     : %s", p.med.dosage);
+        		printf("\nDuration   : %d days", p.med.days);
+            found = 1;
+            printf("\nPrice for %s: ", p.med.name);
+            scanf("%f", &p.med.price);
+            p.bill = calculateBill(p);
+            fseek(fp, -((long)sizeof(p)), SEEK_CUR);
+            fwrite(&p, sizeof(p), 1, fp);
             break;
         }
     }
-
-    if (!found)
-        printf("Medication record not found.\n");
-
     fclose(fp);
+    if(found) printf("Price Updated & Bill Calculated.\n");
 }
 
 /* ================== WARD MODULE ================== */
@@ -384,8 +369,8 @@ void addWard() {
         return;
     }
 
-printf("Enter Ward Name: ");
-scanf(" %[^\n]", w.wardName);
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", w.wardName);
 
     printf("Enter Total Beds: ");
     scanf("%d", &w.totalBeds);
@@ -442,7 +427,7 @@ void checkVacancy() {
 /* ================== VISITOR MODULE ================== */
 
 void addVisitor() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("visitors.dat", "ab");
     struct Visitor v;
 
@@ -454,11 +439,11 @@ void addVisitor() {
     printf("Enter Patient ID: ");
     scanf("%d", &v.patientID);
 
-printf("Enter Visitor Name: ");
-scanf(" %[^\n]", v.visitorName);
+    printf("Enter Visitor Name: ");
+    scanf(" %[^\n]", v.visitorName);
 
-printf("Enter Relation: ");
-scanf(" %[^\n]", v.relation);
+    printf("Enter Relation: ");
+    scanf(" %[^\n]", v.relation);
 
     fwrite(&v, sizeof(v), 1, fp);
     fclose(fp);
@@ -467,7 +452,7 @@ scanf(" %[^\n]", v.relation);
 }
 
 void viewVisitors() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("visitors.dat", "rb");
     struct Visitor v;
 
@@ -485,7 +470,7 @@ void viewVisitors() {
 }
 
 void searchVisitorByPatientID() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("visitors.dat", "rb");
     struct Visitor v;
     int id, found = 0;
@@ -515,7 +500,7 @@ void searchVisitorByPatientID() {
 /* ================== DOCTOR ROUND MODULE ================== */
 
 void addRound() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("rounds.dat", "ab");
     struct Round r;
 
@@ -530,8 +515,8 @@ void addRound() {
     printf("Enter Patient ID: ");
     scanf("%d", &r.patientID);
 
-printf("Enter Ward: ");
-scanf(" %[^\n]", r.ward);
+    printf("Enter Ward: ");
+    scanf(" %[^\n]", r.ward);
 
     fwrite(&r, sizeof(r), 1, fp);
     fclose(fp);
@@ -540,7 +525,7 @@ scanf(" %[^\n]", r.ward);
 }
 
 void findDoctorByWard() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("rounds.dat", "rb");
     struct Round r;
     char ward[30];
@@ -551,8 +536,8 @@ void findDoctorByWard() {
         return;
     }
 
-printf("Enter Ward Name: ");
-scanf(" %[^\n]", ward);
+    printf("Enter Ward Name: ");
+    scanf(" %[^\n]", ward);
 
     while (fread(&r, sizeof(r), 1, fp)) {
         if (strcmp(r.ward, ward) == 0) {
@@ -569,7 +554,7 @@ scanf(" %[^\n]", ward);
 }
 
 void findPatientsByDoctor() {
-    clearScreen();
+	clearScreen();
     FILE *fp = fopen("rounds.dat", "rb");
     struct Round r;
     int docID, found = 0;
